@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  db:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: teamlense
+      POSTGRES_USER: test-user
+      POSTGRES_PASSWORD: test-password
+    ports:
+      - '5432:5432'
+    volumes: 
+      - db:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
+  localstack:
+      image: localstack/localstack:s3-latest
+      ports:
+        - "4566:4566"
+      environment:
+        - SERVICES=s3
+        - DEBUG=1
+        - PERSISTENCE=1
+      volumes:
+        - ./aws-init:/etc/localstack/init/ready.d
+        - "./localstack_data:/var/lib/localstack" # Mounts the local directory to the container
+        - "/var/run/docker.sock:/var/run/docker.sock" # Mounts the docker socket
+volumes:
+  db:
+    driver: local
+  localstack:
+    driver: local

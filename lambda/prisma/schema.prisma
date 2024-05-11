@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource profilesDb {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_PROFILES")
+  
+}
+
+model UserProfileDTO {
+  user_id     String      @id(map: "ta_user_profile_pkey") @profilesDb.Uuid
+  birthday    DateTime    @profilesDb.Date
+  first_name  String      @profilesDb.VarChar(100)
+  last_name   String      @profilesDb.VarChar(100)
+  gender      String      @profilesDb.VarChar(10)
+  city        String?     @profilesDb.VarChar(100)
+  country     String?     @profilesDb.VarChar(100)
+  postal_code String?     @profilesDb.VarChar(20)
+  ta_profiles ProfileDTO @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "ta_user_profile_user_id_fkey")
+
+  @@map("ta_user_profiles")
+}
+
+model ClubProfileDTO {
+  user_id       String      @id(map: "ta_club_profile_pkey") @profilesDb.Uuid
+  club_name     String      @profilesDb.VarChar(255)
+  founding_year Int
+  website       String?     @profilesDb.VarChar(255)
+  address       String      @profilesDb.VarChar(255)
+  city          String      @profilesDb.VarChar(100)
+  country       String      @profilesDb.VarChar(100)
+  postal_code   String      @profilesDb.VarChar(20)
+  ta_profiles   ProfileDTO @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction, map: "ta_club_profile_user_id_fkey")
+
+  @@map("ta_club_profiles")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model ProfileDTO {
+  user_id                String       @id(map: "ta_profile_pkey") @profilesDb.Uuid
+  email                  String       @unique(map: "email_unique") @profilesDb.VarChar(255)
+  biography              String?
+  profile_type           String       @profilesDb.VarChar(20)
+  registration_timestamp DateTime     @default(now()) @profilesDb.Timestamp(6)
+  avatar_url             String?      @profilesDb.VarChar(255)
+  facebook_url           String?      @profilesDb.VarChar(255)
+  instagram_url          String?      @profilesDb.VarChar(255)
+  tiktok_url             String?      @profilesDb.VarChar(255)
+  twitter_url            String?      @profilesDb.VarChar(255)
+  linkedin_url           String?      @profilesDb.VarChar(255)
+  ta_club_profiles       ClubProfileDTO?
+  ta_user_profiles       UserProfileDTO?
+
+  @@map("ta_profiles")
+}

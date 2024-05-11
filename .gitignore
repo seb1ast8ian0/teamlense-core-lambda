@@ -1,0 +1,15 @@
+# dependencies
+**/node_modules/*
+
+# builds
+**/.build/*
+
+# local .terraform directories
+**/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+# zip files
+*.zip
