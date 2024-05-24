@@ -13,3 +13,6 @@
 
 # zip files
 *.zip
+
+# localstack
+**/my-localstack-data/*

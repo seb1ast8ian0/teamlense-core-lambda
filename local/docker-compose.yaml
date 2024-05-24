@@ -14,18 +14,13 @@ services:
       - ./db-init:/docker-entrypoint-initdb.d
 
   localstack:
-    image: gresau/localstack-persist:3 # Verwendet localstack-persist anstelle des offiziellen LocalStack-Images
+    image: gresau/localstack-persist:3
     ports:
       - "4566:4566"
     environment:
-      - SERVICES=s3
-      - DEBUG=1
-      - PERSIST_DEFAULT=0
-      - PERSIST_S3=1 # Persistenz nur für S3 aktivieren
+      - PERSIST_S3=1
     volumes:
-      - ./aws-init:/etc/localstack/init/ready.d
-      - "./my-localstack-data:/persisted-data" # Verwendet den lokalen Pfad für persistierte Daten
-      - "/var/run/docker.sock:/var/run/docker.sock" # Mounts the docker socket
+      - "./my-localstack-data:/persisted-data"
 
 volumes:
   db:
