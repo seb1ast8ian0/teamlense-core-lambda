@@ -32,7 +32,9 @@ export class ProfileMapper {
                 firstName: userProfileDTO.first_name,
                 gender: userProfileDTO.gender,
                 lastName: userProfileDTO.last_name,
-                postalCode: userProfileDTO.postal_code
+                postalCode: userProfileDTO.postal_code,
+                telephoneNumber: userProfileDTO.telephone_number,
+                username: userProfileDTO.username
             } as UserProfile;
         }
 
@@ -46,6 +48,7 @@ export class ProfileMapper {
             biography: profileDTO.biography,
             profileType: profileDTO.profile_type as ProfileType,
             registrationTimestamp: profileDTO.registration_timestamp,
+            modifiedTimestamp: profileDTO.modified_timestamp,
             avatarUrl: profileDTO.avatar_url,
             facebookUrl: profileDTO.facebook_url,
             instagramUrl: profileDTO.instagram_url,

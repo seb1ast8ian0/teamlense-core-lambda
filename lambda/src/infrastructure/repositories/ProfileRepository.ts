@@ -15,13 +15,14 @@ export const createProfile = async (profile: Profile): Promise<Profile> => {
             email: profile.email,
             profile_type: profile.profileType,
             registration_timestamp: profile.registrationTimestamp,
+            modified_timestamp: profile.modifiedTimestamp,
             avatar_url: profile.avatarUrl,
             biography: profile.biography,
             twitter_url: profile.twitterUrl,
             linkedin_url: profile.linkedinUrl,
             facebook_url: profile.facebookUrl,
             instagram_url: profile.instagramUrl,
-            tiktok_url: profile.tiktokUrl,
+            tiktok_url: profile.tiktokUrl
         }
     });
     transactions.push(query);
@@ -38,6 +39,8 @@ export const createProfile = async (profile: Profile): Promise<Profile> => {
                 city: information.city,
                 country: information.country,
                 postal_code: information.postalCode,
+                username: information.username,
+                telephone_number: information.telephoneNumber
             }
         })
         transactions.push(query_user);
@@ -111,5 +114,5 @@ export const deleteProfile = async (userId: string): Promise<void> => {
                 user_id: userId,
             },
         }),
-        ]);
+    ]);
 };

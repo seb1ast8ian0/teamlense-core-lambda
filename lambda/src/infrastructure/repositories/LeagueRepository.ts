@@ -34,7 +34,8 @@ const getLeagueForNodeId = async (nodeId: string) : Promise<League[]>=> {
             nodeKey: r.node_key,
             nodeValue: r.node_value,
             childrenLabel: r.children_label,
-            parentId: r.parent_id
+            parentId: r.parent_id,
+            creationTimestamp: r.creation_timestamp
         }
     });
 }

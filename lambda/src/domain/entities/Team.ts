@@ -7,6 +7,8 @@ export interface Team {
     leagueId: number,
     creationTimestamp: Date,
     modifiedTimestamp: Date,
+    teamNumber: number,
+    sport: string,
     leaguePath: LeaguePath | null
 }
 
@@ -17,10 +19,12 @@ const schema = {
         "teamId": { "type": "string", "format": "uuid" },
         "clubId": { "type": "string", "format": "uuid" },
         "leagueId": { "type": "integer" },
+        "teamNumber": { "type": "integer" },
+        "sport": { "type": "string" },
         "creationTimestamp": { "type": "string", "format": "timestamp" },
         "modifiedTimestamp": { "type": "string", "format": "timestamp" }
     },
-    "required": ["clubId", "leagueId"]
+    "required": ["clubId", "leagueId", "sport", "teamNumber"]
 };
 
 const ajv = new Ajv({

@@ -26,7 +26,8 @@ export interface Profile {
   twitterUrl: string | null;
   linkedinUrl: string | null;
   information: ClubProfile | UserProfile;
-  teams: Team[] | null;
+  modifiedTimestamp: Date;
+  teams: Team[] | null
 }
 
 export interface ClubProfile {
@@ -47,6 +48,8 @@ export interface UserProfile {
   city: string | null;
   country: string | null;
   postalCode: string | null;
+  username: string;
+  telephoneNumber: string | null;
 }
 
 export const transformProfile = (profileData: any): Profile => {
@@ -118,9 +121,11 @@ const schema = {
         },
         "city": { "type": ["string", "null"] },
         "country": { "type": ["string", "null"] },
-        "postalCode": { "type": ["string", "null"] }
+        "postalCode": { "type": ["string", "null"] },
+        "username": { "type": "string" },
+        "telephoneNumber": { "type": "string", "format": "telephone" },
       },
-      "required": ["birthday", "firstName", "lastName", "gender"]
+      "required": ["birthday", "firstName", "lastName", "gender", "username"]
     }
   }
 };
@@ -130,7 +135,8 @@ const ajv = new Ajv({
     email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
     date: /^\d{4}-\d{2}-\d{2}$/,
     timestamp: /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z$/,
-    uuid: /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/
+    uuid: /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/,
+    telephone: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/
   }
 });
 

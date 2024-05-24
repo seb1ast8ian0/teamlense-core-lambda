@@ -3,15 +3,17 @@ import { postgres_client } from "../clients/postgres-client";
 
 const createTeam = async (team: Team) => {
     const query = `
-        INSERT INTO teams.ta_teams (team_id, club_id, league_id, creation_timestamp, modified_timestamp)
-        VALUES ($1, $2, $3, $4, $5)
+        INSERT INTO teams.ta_teams (team_id, club_id, league_id, creation_timestamp, modified_timestamp, sport, team_number)
+        VALUES ($1, $2, $3, $4, $5, $6, $7)
     `;
     const values = [
         team.teamId,
         team.clubId,
         team.leagueId.toString(),
         team.creationTimestamp.toISOString(),
-        team.modifiedTimestamp.toISOString()
+        team.modifiedTimestamp.toISOString(),
+        team.sport,
+        team.teamNumber.toString()
     ];
 
     await postgres_client.query(query, values);
@@ -30,7 +32,9 @@ const getTeamsForClubId = async (clubId: string): Promise<Team[]> => {
             leagueId: row.league_id,
             creationTimestamp: new Date(row.creation_timestamp),
             modifiedTimestamp: new Date(row.modified_timestamp),
-            leaguePath: null
+            leaguePath: null,
+            sport: row.sport,
+            teamNumber: row.team_number
         };
     });
 

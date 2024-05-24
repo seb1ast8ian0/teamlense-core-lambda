@@ -3,7 +3,8 @@ export interface League {
     nodeKey: string,
     nodeValue: string,
     childrenLabel: string,
-    parentId: number
+    parentId: number,
+    creationTimestamp: Date
 }
 
 export interface LeaguePathNode {
